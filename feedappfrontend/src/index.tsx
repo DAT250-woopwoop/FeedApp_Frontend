@@ -1,10 +1,10 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import Accounts from './services/Accounts'
-import Polls from './services/Polls'
+import NewAccount from './services/NewAccount'
+
 
 
 
