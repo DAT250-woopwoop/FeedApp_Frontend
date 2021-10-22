@@ -1,12 +1,18 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import Accounts from './services/Accounts'
+import Polls from './services/Polls'
+
+
+
+
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <App/>
   </React.StrictMode>,
   document.getElementById('root')
 );
