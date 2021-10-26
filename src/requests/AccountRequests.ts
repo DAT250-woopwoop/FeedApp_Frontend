@@ -1,11 +1,11 @@
 import axios, { AxiosResponse } from "axios";
 import { APIPATH, ACCOUNTPATH } from "../constants";
 import {
-  Account,
+  AccountType,
   AccountByIdResponse,
   MakeNewAccountRequest,
   MakeNewPollRequest,
-  Poll,
+  PollType,
   UpdateAccountRequest,
 } from "../services/types";
 import { getAllPollsRequest } from "./PollRequests";
@@ -13,7 +13,7 @@ import { getAllPollsRequest } from "./PollRequests";
 export const postNewPollRequest = (
   data: MakeNewPollRequest,
   accountId: number,
-  setPollData: (arg0: Poll[]) => void
+  setPollData: (arg0: PollType[]) => void
 ) => {
   axios
     .post(`${APIPATH}${ACCOUNTPATH}/${accountId}/newPoll`, data)
@@ -28,11 +28,11 @@ export const postNewPollRequest = (
 };
 
 export const getAllAccountsRequest = (
-  setAccountData: (arg0: Account[]) => void
+  setAccountData: (arg0: AccountType[]) => void
 ) => {
   axios
-    .get<Account[]>(`${APIPATH}${ACCOUNTPATH}`)
-    .then((response: AxiosResponse<Account[]>) => {
+    .get<AccountType[]>(`${APIPATH}${ACCOUNTPATH}`)
+    .then((response: AxiosResponse<AccountType[]>) => {
       setAccountData(response.data);
       console.log(response.data);
     })

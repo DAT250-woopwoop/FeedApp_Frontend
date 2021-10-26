@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react";
-import { Poll } from "./types";
+import { PollType } from "./types";
 import "../assets/Style.css";
 import { postNewPollRequest } from "../requests/AccountRequests";
 import { getAllPollsRequest } from "../requests/PollRequests";
+import { AnswerButton } from "../components/AnswerButton";
+import { Poll } from "../components/Poll";
 
 export const Polls = () => {
-  const [pollData, setPollData] = useState<Poll[]>([]);
+  const [pollData, setPollData] = useState<PollType[]>([]);
 
   useEffect(() => {
     getAllPollsRequest(setPollData);
@@ -36,12 +38,7 @@ export const Polls = () => {
       <h2>Here are all the polls</h2>
       <div className="Content">
         {pollData.map((poll) => {
-          return (
-            <div className="Box" key={poll.id}>
-              Name: {poll.pollName} <br />
-              Description: {poll.pollDesc} <br />
-            </div>
-          );
+          return <Poll {...poll}/>
         })}
       </div>
     </div>

@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
-import { Account } from "./types";
+import { AccountType } from "./types";
 import "../assets/Style.css";
 import { getAllAccountsRequest } from "../requests/AccountRequests";
 
 export const Accounts = () => {
 
-  const [accountData, setAccountData] = useState<Account[]>([]);
+  const [accountData, setAccountData] = useState<AccountType[]>([]);
   console.log('Account data: ', accountData);
 
   useEffect(() => {

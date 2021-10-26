@@ -1,11 +1,11 @@
 import axios, { AxiosResponse } from "axios";
 import { APIPATH, POLLPATH } from "../constants";
-import { Poll, UpdatePollRequest } from "../services/types";
+import { PollType, UpdatePollRequest } from "../services/types";
 
-export const getAllPollsRequest = (setPollData: (arg0: Poll[]) => void) => {
+export const getAllPollsRequest = (setPollData: (arg0: PollType[]) => void) => {
   axios
-    .get<Poll[]>(`${APIPATH}${POLLPATH}`)
-    .then((response: AxiosResponse<Poll[]>) => {
+    .get<PollType[]>(`${APIPATH}${POLLPATH}`)
+    .then((response: AxiosResponse<PollType[]>) => {
       console.log(response.data);
       setPollData(response.data);
     })
@@ -18,8 +18,8 @@ export const getPollById = (
     id: number,
 ) => {
     axios
-    .get<Poll>(`${APIPATH}${POLLPATH}/${id}`)
-    .then((response: AxiosResponse<Poll>) => {
+    .get<PollType>(`${APIPATH}${POLLPATH}/${id}`)
+    .then((response: AxiosResponse<PollType>) => {
         console.log(response);
 
     })
@@ -33,8 +33,8 @@ export const putPollById = (
     updateData: UpdatePollRequest,
 ) => {
     axios
-    .put<Poll>(`${APIPATH}${POLLPATH}/${id}`, updateData)
-    .then((response: AxiosResponse<Poll>) => {
+    .put<PollType>(`${APIPATH}${POLLPATH}/${id}`, updateData)
+    .then((response: AxiosResponse<PollType>) => {
         console.log(response);
     })
     .catch(err => {

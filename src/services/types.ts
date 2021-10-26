@@ -9,7 +9,7 @@ export type User = {
     company: Array<String>;
 };
 
-export type Account = {
+export type AccountType = {
     id: number;
     username: String;
     password: String;
@@ -19,7 +19,7 @@ export type Account = {
     polls: Array<number>;
 };
 
-export type Poll = {
+export type PollType = {
     id: number;
     pollDesc: String;
     pollName: String;
