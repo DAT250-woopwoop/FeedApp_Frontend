@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import {useState} from 'react';
 import './assets/Style.css'
 import Accounts from './services/Accounts';
 import Polls from './services/Polls';

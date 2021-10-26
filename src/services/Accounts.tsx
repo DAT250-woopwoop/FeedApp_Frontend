@@ -1,10 +1,10 @@
-import React, {useState, useEffect} from 'react';
-import { Account } from './interfaces';
-import axios, {AxiosResponse} from 'axios';
+import {useState, useEffect} from 'react';
+import { Account } from './types';
 import '../assets/Style.css'
 import Polls from './Polls';
 import App from '../App';
 import NewAccount from './NewAccount';
+import { getAllAccountsRequest } from '../requests/AccountRequests';
 
 const Accounts = () => {
   const [choise, setChoise] = useState<number>(1);
@@ -14,15 +14,7 @@ const Accounts = () => {
   console.log('Account data: ', accountData);
 
   useEffect(() => {
-    axios
-      .get<Account[]>('http://localhost:8080/users')
-      .then((response: AxiosResponse<Account[]>) => {
-        setAccountData(response.data);
-        console.log(response.data)
-      })
-      .catch(err => {
-        console.log(err)
-      })
+    getAllAccountsRequest(setAccountData)
   }, [])
 
   const accountsScreen = (

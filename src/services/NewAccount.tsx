@@ -1,8 +1,7 @@
-import React, {useState, useEffect} from 'react';
-import { Account } from './interfaces';
+import { useState } from 'react';
+import { Account } from './types';
 import axios, {AxiosResponse} from 'axios';
 import '../assets/Style.css';
-import { createEmitAndSemanticDiagnosticsBuilderProgram } from 'typescript';
 import Accounts from './Accounts';
 import Polls from './Polls';
 import App from '../App';
