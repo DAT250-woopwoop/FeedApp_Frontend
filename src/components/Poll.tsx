@@ -8,8 +8,8 @@ export const Poll = (props:PollType) => {
       Name: {props.pollName} <br />
       Description: {props.pollDesc} <br />
       <div>
-        <AnswerButton voteType="Yes" callback={() => {}} />
-        <AnswerButton voteType="No" callback={() => {}} />
+        <AnswerButton votes={props.yesOption}voteType="Yes" callback={() => {}} />
+        <AnswerButton votes={props.noOption} voteType="No" callback={() => {}} />
       </div>
     </div>
   );
