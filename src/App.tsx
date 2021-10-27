@@ -4,6 +4,7 @@ import { Accounts } from "./services/Accounts";
 import { Polls } from "./services/Polls";
 import { NewAccount } from "./services/NewAccount";
 import { MyHeader } from "./components/MyHeader";
+import { NewPoll } from "./services/NewPoll";
 
 export const App = () => {
   const [choise, setChoise] = useState<number>(1);
@@ -22,6 +23,8 @@ export const App = () => {
               return (<Polls />)
             case 3:
               return (<NewAccount />)
+            case 4:
+              return <NewPoll/>
             default:
               return (<div>Hei</div>);
           }
