@@ -37,7 +37,7 @@ export const Polls = () => {
       <h2>Here are all the polls</h2>
       <div className="Content">
         {pollData.map((poll) => {
-          return <Poll {...poll}/>
+          return <Poll key={poll.id} {...poll}/>
         })}
       </div>
     </div>
