@@ -3,7 +3,6 @@ import { PollType } from "./types";
 import "../assets/Style.css";
 import { postNewPollRequest } from "../requests/AccountRequests";
 import { getAllPollsRequest } from "../requests/PollRequests";
-import { AnswerButton } from "../components/AnswerButton";
 import { Poll } from "../components/Poll";
 
 export const Polls = () => {
