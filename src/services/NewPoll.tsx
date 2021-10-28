@@ -1,4 +1,4 @@
-import { SetStateAction, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { postNewPollRequest } from "../requests/AccountRequests";
 import { MakeNewPollRequest } from "./types";
 import DatePicker from 'react-datepicker';

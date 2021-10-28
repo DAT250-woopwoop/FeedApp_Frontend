@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import { PollType } from "../services/types";
 import { AnswerButton } from "./AnswerButton";
 import { yesNoRequest } from "../requests/PollRequests";
