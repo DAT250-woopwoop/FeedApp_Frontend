@@ -1,6 +1,8 @@
-import { useEffect, useState } from "react";
+import { SetStateAction, useEffect, useState } from "react";
 import { postNewPollRequest } from "../requests/AccountRequests";
 import { MakeNewPollRequest } from "./types";
+import DatePicker from 'react-datepicker';
+import "react-datepicker/dist/react-datepicker.css";
 
 export const NewPoll = () => {
   const [newPollData, setNewPollData] = useState<MakeNewPollRequest>({
@@ -16,13 +18,19 @@ export const NewPoll = () => {
 
   const collectForm = (event: any) => {
     event.preventDefault();
-    const { title, desc, sTime, eTime, priv } = event.target;
+    const { title, desc, priv } = event.target;
+
+    
+    
+    //"2021-12-28 19:10:00"
+    const sTime = startDate.getFullYear() + "-" + startDate.getMonth() + "-" + startDate.getDate() + " " + startDate.getHours() +":"+ startDate.getMinutes() +":"+ startDate.getSeconds()
+    const eTime = endDate.getFullYear() + "-" + endDate.getMonth() + "-" + endDate.getDate() + " " + endDate.getHours() +":"+ endDate.getMinutes() +":"+ endDate.getSeconds()
 
     setNewPollData({
       pollDesc: title.value,
       pollName: desc.value,
-      startTime: sTime.value,
-      endTime: eTime.value,
+      startTime: sTime,
+      endTime: eTime,
       privatePoll: Boolean(priv.value),
       closed: false, // burde bli satt i backend
       yesOption: 0, // burde bli satt i backend
@@ -34,7 +42,8 @@ export const NewPoll = () => {
         postNewPollRequest(newPollData, 1, (e)=>{})
     }
   }, [newPollData]);
-
+  const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(new Date());
   return (
     <div>
       <h2>Make new poll</h2>
@@ -52,14 +61,12 @@ export const NewPoll = () => {
         </div>
         <div>
           <label>
-            Start time: 
-            <input defaultValue="2021-03-21 18:10:00" type="sTime" id="sTime" />
+            Start time: <DatePicker showTimeInput selected={startDate} onChange={(date:Date) => setStartDate(date)} />
           </label>
         </div>
         <div>
           <label>
-            End time: 
-            <input defaultValue="2021-12-01 19:10:00" type="eTime" id="eTime" />
+            End time: <DatePicker showTimeInput selected={endDate} onChange={(date:Date) => setEndDate(date)} />
           </label>
         </div>
         <div>

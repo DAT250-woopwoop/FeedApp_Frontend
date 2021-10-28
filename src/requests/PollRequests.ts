@@ -2,6 +2,21 @@ import axios, { AxiosResponse } from "axios";
 import { APIPATH, POLLPATH } from "../constants";
 import { PollType, UpdatePollRequest } from "../services/types";
 
+export const yesNoRequest = (
+    id: number,
+    vote: string
+) => {
+    console.log(`hei: ${APIPATH}${POLLPATH}/${id}/${vote}`)
+    axios
+    .put<PollType>(`${APIPATH}${POLLPATH}/${id}/${vote}`)
+    .then((response: AxiosResponse<PollType>) => {
+        console.log(response);
+    })
+    .catch(err => {
+        console.error(err);
+    });
+};
+
 export const getAllPollsRequest = (setPollData: (arg0: PollType[]) => void) => {
   axios
     .get<PollType[]>(`${APIPATH}${POLLPATH}`)

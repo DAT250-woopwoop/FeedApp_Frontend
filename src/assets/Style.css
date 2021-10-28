@@ -21,7 +21,7 @@ h1 {
 }
 
 .Box {
-  width: 90vmax;
+  width: 90vw;
   box-sizing: content-box;
   border: solid rgb(24, 144, 219) 3px;
   padding: 5px;
