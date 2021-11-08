@@ -30,6 +30,7 @@ export type PollType = {
     yesOption: number;
     noOption: number;
     accountId: number;
+    pollVotes: Array<PollVote>,
 };
 
 export type MakeNewPollRequest = {
@@ -78,4 +79,20 @@ export type UpdatePollRequest = {
     closed: boolean | undefined,
     yesOption: number | undefined,
     noOption: number | undefined ,
+}
+
+export type PollVote = {
+    id: number,
+    votes: number,
+    pollId: number,
+    accountId: number,
+}
+
+export type LoginAccountRequest = {
+    username: string,
+    password: string,
+}
+
+export type BearerToken = {
+    Bearer: string,
 }
