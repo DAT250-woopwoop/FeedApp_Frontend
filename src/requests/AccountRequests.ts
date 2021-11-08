@@ -7,6 +7,7 @@ import {
   MakeNewPollRequest,
   PollType,
   UpdateAccountRequest,
+  LoginAccountRequest,
 } from "../services/types";
 import { getAllPollsRequest } from "./PollRequests";
 
@@ -43,7 +44,7 @@ export const getAllAccountsRequest = (
 
 export const makeNewAccountRequest = (data: MakeNewAccountRequest) => {
   axios
-    .post(`${APIPATH}${ACCOUNTPATH}`, data)
+    .post(`${APIPATH}${ACCOUNTPATH}/signup`, data)
     .then((response: AxiosResponse) => {
       console.log(response);
     })
@@ -51,6 +52,18 @@ export const makeNewAccountRequest = (data: MakeNewAccountRequest) => {
       console.error(err);
     });
 };
+
+export const loginAccountRequest = (data: LoginAccountRequest, callback : (arg0:any) => void) => {
+  axios
+    .post(`${APIPATH}/login`, data)
+    .then((response: AxiosResponse) => {
+      console.log(response);
+      callback(response.data)
+    })
+    .catch((err) => {
+      console.error(err);
+    });
+  }
 
 export const getAccountByIdRequest = (
   id: number,
