@@ -20,8 +20,7 @@ const App2 = () => {
   const { loggedInUser } = useLogedInAccount();
   return (
     <div>
-      {console.log(loggedInUser)
-      }
+      
       <MyHeader setPage={setChoise} />
       <div>
         {loggedInUser.bearerToken
