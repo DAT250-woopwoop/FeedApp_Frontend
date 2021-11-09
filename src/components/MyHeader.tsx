@@ -1,5 +1,3 @@
-import { useLogedInAccount } from "../AccountProvider";
-
 type HeaderProps = {
   setPage: (arg0: number) => void,
 };
