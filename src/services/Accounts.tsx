@@ -6,7 +6,6 @@ import { getAllAccountsRequest } from "../requests/AccountRequests";
 export const Accounts = () => {
 
   const [accountData, setAccountData] = useState<AccountType[]>([]);
-  console.log('Account data: ', accountData);
 
   useEffect(() => {
     getAllAccountsRequest(setAccountData);

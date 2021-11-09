@@ -1,12 +1,11 @@
-import { loginAccountRequest } from "../requests/AccountRequests";
-import { BearerToken } from "../services/types";
+import { useLogedInAccount } from "../AccountProvider";
 
 type HeaderProps = {
-  setPage: (arg0: number) => void;
-  setUserDetail: (arg0: BearerToken) => void
+  setPage: (arg0: number) => void,
 };
 
 export const MyHeader = (props: HeaderProps) => {
+  const {} = useLogedInAccount();
   return (
     <div className="App">
       <h1>Welcome to FeedApp</h1>
@@ -14,9 +13,7 @@ export const MyHeader = (props: HeaderProps) => {
       <button onClick={() => props.setPage(2)}>Polls</button>
       <button onClick={() => props.setPage(4)}>Add new poll</button>
       <button onClick={() => props.setPage(3)}>Register new user</button>
-      <button onClick={() => {
-        loginAccountRequest({username:"Mathias", password: "test"}, props.setUserDetail)
-      }}>login</button>
+      <button onClick={() => props.setPage(5)}>LogIn</button>
     </div>
   );
 };

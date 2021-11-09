@@ -8,6 +8,8 @@ import {
   PollType,
   UpdateAccountRequest,
   LoginAccountRequest,
+  BearerToken,
+  LoggedInUser,
 } from "../services/types";
 import { getAllPollsRequest } from "./PollRequests";
 
@@ -55,9 +57,9 @@ export const makeNewAccountRequest = (data: MakeNewAccountRequest) => {
 
 export const loginAccountRequest = (data: LoginAccountRequest, callback : (arg0:any) => void) => {
   axios
-    .post(`${APIPATH}/login`, data)
-    .then((response: AxiosResponse) => {
-      console.log(response);
+    .post<BearerToken>(`${APIPATH}/login`, data)
+    .then((response: AxiosResponse<BearerToken>) => {
+      console.log(response.data.Bearer);
       callback(response.data)
     })
     .catch((err) => {
@@ -104,4 +106,25 @@ export const deleteAccountRequest = (
   }).catch((err) => {
     console.error(err);
   });
+}
+
+export const getAccountByUsernameRequest = (
+  username: string,
+  token: string,
+  callback: (arg0: any) => void, 
+) => {
+  const config = {
+    headers: {
+      "Authorization": `Bearer ${token}`
+    }
+  }
+  axios
+  .get<LoggedInUser>(`${APIPATH}${ACCOUNTPATH}/username/${username}`, config)
+  .then((res: AxiosResponse<LoggedInUser>) => callback({
+    id: res.data.id,
+    username: res.data.username,
+    f_name: res.data.f_name,
+    l_name: res.data.l_name,
+    bearerToken: token,
+ }))
 }
