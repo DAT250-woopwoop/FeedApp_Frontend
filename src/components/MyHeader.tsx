@@ -5,7 +5,6 @@ type HeaderProps = {
 };
 
 export const MyHeader = (props: HeaderProps) => {
-  const {} = useLogedInAccount();
   return (
     <div className="App">
       <h1>Welcome to FeedApp</h1>
