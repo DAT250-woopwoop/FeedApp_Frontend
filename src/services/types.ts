@@ -96,3 +96,11 @@ export type LoginAccountRequest = {
 export type BearerToken = {
     Bearer: string,
 }
+
+export type LoggedInUser = {
+    bearerToken: string | undefined;
+    id: number | undefined;
+    username: string | undefined;
+    f_name: string | undefined;
+    l_name: string | undefined;
+}
