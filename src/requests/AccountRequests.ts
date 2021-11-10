@@ -13,6 +13,14 @@ import {
 } from "../services/types";
 import { getAllPollsRequest } from "./PollRequests";
 
+const getConfig = (token:string) => {
+  return {
+    headers: {
+      "Authorization": `Bearer ${token}`
+    }
+  }
+}
+
 export const postNewPollRequest = (
   data: MakeNewPollRequest,
   accountId: number,
@@ -113,11 +121,8 @@ export const getAccountByUsernameRequest = (
   token: string,
   callback: (arg0: any) => void, 
 ) => {
-  const config = {
-    headers: {
-      "Authorization": `Bearer ${token}`
-    }
-  }
+  const config = getConfig(token)
+
   axios
   .get<LoggedInUser>(`${APIPATH}${ACCOUNTPATH}/username/${username}`, config)
   .then((res: AxiosResponse<LoggedInUser>) => callback({
