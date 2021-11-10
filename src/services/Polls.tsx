@@ -4,13 +4,18 @@ import "../assets/Style.css";
 import { postNewPollRequest } from "../requests/AccountRequests";
 import { getAllPollsRequest } from "../requests/PollRequests";
 import { Poll } from "../components/Poll";
+import { useLogedInAccount } from "../AccountProvider";
 
 export const Polls = () => {
   const [pollData, setPollData] = useState<PollType[]>([]);
 
+  const { loggedInUser } = useLogedInAccount()
+
+
+
   useEffect(() => {
-    getAllPollsRequest(setPollData);
-  }, []);
+    getAllPollsRequest(setPollData, loggedInUser.bearerToken!!);
+  }, [loggedInUser.bearerToken]);
 
   return (
     <div>
@@ -28,7 +33,8 @@ export const Polls = () => {
               noOption: 0,
             },
             1,
-            setPollData
+            setPollData,
+            loggedInUser.bearerToken!!
           );
         }}
       >

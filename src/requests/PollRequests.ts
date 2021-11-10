@@ -1,25 +1,29 @@
 import axios, { AxiosResponse } from "axios";
 import { APIPATH, POLLPATH } from "../constants";
 import { PollType, UpdatePollRequest } from "../services/types";
+import { getConfig } from "./UtilsRequests";
 
-export const yesNoRequest = (
-    id: number,
-    vote: string
-) => {
-    console.log(`hei: ${APIPATH}${POLLPATH}/${id}/${vote}`)
-    axios
-    .put<PollType>(`${APIPATH}${POLLPATH}/${id}/${vote}`)
+export const yesNoRequest = (id: number, vote: string, token: string) => {
+  const config = getConfig(token);
+
+  axios
+    .put<PollType>(`${APIPATH}${POLLPATH}/${id}/${vote}`, null, config)
     .then((response: AxiosResponse<PollType>) => {
-        console.log(response);
+      console.log(response);
     })
-    .catch(err => {
-        console.error(err);
+    .catch((err) => {
+      console.error(err);
     });
 };
 
-export const getAllPollsRequest = (setPollData: (arg0: PollType[]) => void) => {
+export const getAllPollsRequest = (
+  setPollData: (arg0: PollType[]) => void,
+  token: string
+) => {
+  const config = getConfig(token);
+
   axios
-    .get<PollType[]>(`${APIPATH}${POLLPATH}`)
+    .get<PollType[]>(`${APIPATH}${POLLPATH}`, config)
     .then((response: AxiosResponse<PollType[]>) => {
       console.log(response.data);
       setPollData(response.data);
@@ -29,40 +33,41 @@ export const getAllPollsRequest = (setPollData: (arg0: PollType[]) => void) => {
     });
 };
 
-export const getPollById = (
-    id: number,
-) => {
-    axios
-    .get<PollType>(`${APIPATH}${POLLPATH}/${id}`)
-    .then((response: AxiosResponse<PollType>) => {
-        console.log(response);
+export const getPollById = (id: number, token: string) => {
+  const config = getConfig(token);
 
+  axios
+    .get<PollType>(`${APIPATH}${POLLPATH}/${id}`, config)
+    .then((response: AxiosResponse<PollType>) => {
+      console.log(response);
     })
-    .catch(err => {
-        console.error(err);
+    .catch((err) => {
+      console.error(err);
     });
 };
 
 export const putPollById = (
-    id: number,
-    updateData: UpdatePollRequest,
+  id: number,
+  updateData: UpdatePollRequest,
+  token: string
 ) => {
-    axios
-    .put<PollType>(`${APIPATH}${POLLPATH}/${id}`, updateData)
-    .then((response: AxiosResponse<PollType>) => {
-        console.log(response);
-    })
-    .catch(err => {
-        console.error(err);
-    });
-}
+  const config = getConfig(token);
 
-export const deletePollById = (id: number) => {
-    axios
-    .put(`${APIPATH}${POLLPATH}/${id}`)
-    .then(response => {
-        console.log(response);
-        console.log(`Poll with id: ${id} deleted.`);
-        
+  axios
+    .put<PollType>(`${APIPATH}${POLLPATH}/${id}`, updateData, config)
+    .then((response: AxiosResponse<PollType>) => {
+      console.log(response);
     })
-}
+    .catch((err) => {
+      console.error(err);
+    });
+};
+
+export const deletePollById = (id: number, token: string) => {
+  const config = getConfig(token);
+
+  axios.put(`${APIPATH}${POLLPATH}/${id}`, null, config).then((response) => {
+    console.log(response);
+    console.log(`Poll with id: ${id} deleted.`);
+  });
+};

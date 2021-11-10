@@ -3,8 +3,10 @@ import { postNewPollRequest } from "../requests/AccountRequests";
 import { MakeNewPollRequest } from "./types";
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
+import { useLogedInAccount } from "../AccountProvider";
 
 export const NewPoll = () => {
+  const { loggedInUser } = useLogedInAccount()
   const [newPollData, setNewPollData] = useState<MakeNewPollRequest>({
     pollDesc: "",
     pollName: "",
@@ -39,9 +41,9 @@ export const NewPoll = () => {
   };
   useEffect(() => {
       if(newPollData.pollName!==""){
-        postNewPollRequest(newPollData, 1, (e)=>{})
+        postNewPollRequest(newPollData, 1, (e)=>{}, loggedInUser.bearerToken!!)
     }
-  }, [newPollData]);
+  }, [loggedInUser.bearerToken, newPollData]);
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
   return (

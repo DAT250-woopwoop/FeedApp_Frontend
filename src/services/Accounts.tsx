@@ -2,14 +2,17 @@ import { useState, useEffect } from "react";
 import { AccountType } from "./types";
 import "../assets/Style.css";
 import { getAllAccountsRequest } from "../requests/AccountRequests";
+import { useLogedInAccount } from "../AccountProvider";
 
 export const Accounts = () => {
 
   const [accountData, setAccountData] = useState<AccountType[]>([]);
 
+  const { loggedInUser } = useLogedInAccount();
+
   useEffect(() => {
-    getAllAccountsRequest(setAccountData);
-  }, []);
+    getAllAccountsRequest(setAccountData, loggedInUser.bearerToken!!);
+  }, [loggedInUser.bearerToken]);
 
   return (
     <div>

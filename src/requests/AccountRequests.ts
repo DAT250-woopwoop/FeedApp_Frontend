@@ -11,27 +11,22 @@ import {
   BearerToken,
   LoggedInUser,
 } from "../services/types";
+import { getConfig } from "./UtilsRequests";
 import { getAllPollsRequest } from "./PollRequests";
-
-const getConfig = (token:string) => {
-  return {
-    headers: {
-      "Authorization": `Bearer ${token}`
-    }
-  }
-}
 
 export const postNewPollRequest = (
   data: MakeNewPollRequest,
   accountId: number,
-  setPollData: (arg0: PollType[]) => void
+  setPollData: (arg0: PollType[]) => void,
+  token: string
 ) => {
+  const config = getConfig(token);
   axios
-    .post(`${APIPATH}${ACCOUNTPATH}/${accountId}/newPoll`, data)
+    .post(`${APIPATH}${ACCOUNTPATH}/${accountId}/newPoll`, data, config)
     .then((response: AxiosResponse) => {
       // orket ikke finne typene xD
       console.log(response);
-      getAllPollsRequest(setPollData); // For å oppdatere listen med den nettoppgade pollen
+      getAllPollsRequest(setPollData, token); // For å oppdatere listen med den nettoppgade pollen
     })
     .catch((err) => {
       console.error(err);
@@ -39,10 +34,13 @@ export const postNewPollRequest = (
 };
 
 export const getAllAccountsRequest = (
-  setAccountData: (arg0: AccountType[]) => void
+  setAccountData: (arg0: AccountType[]) => void,
+  token: string
 ) => {
+  const config = getConfig(token);
+
   axios
-    .get<AccountType[]>(`${APIPATH}${ACCOUNTPATH}`)
+    .get<AccountType[]>(`${APIPATH}${ACCOUNTPATH}`, config)
     .then((response: AxiosResponse<AccountType[]>) => {
       setAccountData(response.data);
       console.log(response.data);
@@ -63,24 +61,30 @@ export const makeNewAccountRequest = (data: MakeNewAccountRequest) => {
     });
 };
 
-export const loginAccountRequest = (data: LoginAccountRequest, callback : (arg0:any) => void) => {
+export const loginAccountRequest = (
+  data: LoginAccountRequest,
+  callback: (arg0: any) => void
+) => {
   axios
     .post<BearerToken>(`${APIPATH}/login`, data)
     .then((response: AxiosResponse<BearerToken>) => {
       console.log(response.data.Bearer);
-      callback(response.data)
+      callback(response.data);
     })
     .catch((err) => {
       console.error(err);
     });
-  }
+};
 
 export const getAccountByIdRequest = (
   id: number,
-  setAccountData: (arg0: AccountByIdResponse) => void
+  setAccountData: (arg0: AccountByIdResponse) => void,
+  token: string
 ) => {
+  const config = getConfig(token);
+
   axios
-    .get<AccountByIdResponse>(`${APIPATH}${ACCOUNTPATH}/${id}`)
+    .get<AccountByIdResponse>(`${APIPATH}${ACCOUNTPATH}/${id}`, config)
     .then((response: AxiosResponse<AccountByIdResponse>) => {
       console.log(response);
       setAccountData(response.data);
@@ -92,10 +96,17 @@ export const getAccountByIdRequest = (
 
 export const putAccountRequest = (
   updateData: (arg0: UpdateAccountRequest) => void,
-  id: number
+  id: number,
+  token: string
 ) => {
+  const config = getConfig(token);
+
   axios
-    .put<AccountByIdResponse>(`${APIPATH}${ACCOUNTPATH}/${id}`, updateData)
+    .put<AccountByIdResponse>(
+      `${APIPATH}${ACCOUNTPATH}/${id}`,
+      updateData,
+      config
+    )
     .then((response: AxiosResponse<AccountByIdResponse>) => {
       console.log(response);
     })
@@ -104,32 +115,35 @@ export const putAccountRequest = (
     });
 };
 
-export const deleteAccountRequest = (
-  id: number,
-) => {
+export const deleteAccountRequest = (id: number, token: string) => {
+  const config = getConfig(token);
+
   axios
-  .delete(`${APIPATH}${ACCOUNTPATH}/${id}`)
-  .then(response => {
-    console.log(`Account with id: ${id} deleted.`);
-  }).catch((err) => {
-    console.error(err);
-  });
-}
+    .delete(`${APIPATH}${ACCOUNTPATH}/${id}`, config)
+    .then((response) => {
+      console.log(`Account with id: ${id} deleted.`);
+    })
+    .catch((err) => {
+      console.error(err);
+    });
+};
 
 export const getAccountByUsernameRequest = (
   username: string,
   token: string,
-  callback: (arg0: any) => void, 
+  callback: (arg0: any) => void
 ) => {
-  const config = getConfig(token)
+  const config = getConfig(token);
 
   axios
-  .get<LoggedInUser>(`${APIPATH}${ACCOUNTPATH}/username/${username}`, config)
-  .then((res: AxiosResponse<LoggedInUser>) => callback({
-    id: res.data.id,
-    username: res.data.username,
-    f_name: res.data.f_name,
-    l_name: res.data.l_name,
-    bearerToken: token,
- }))
-}
+    .get<LoggedInUser>(`${APIPATH}${ACCOUNTPATH}/username/${username}`, config)
+    .then((res: AxiosResponse<LoggedInUser>) =>
+      callback({
+        id: res.data.id,
+        username: res.data.username,
+        f_name: res.data.f_name,
+        l_name: res.data.l_name,
+        bearerToken: token,
+      })
+    );
+};
