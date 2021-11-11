@@ -36,14 +36,7 @@ export const getAllPollsRequest = (
 export const getPollById = (id: number, token: string) => {
   const config = getConfig(token);
 
-  axios
-    .get<PollType>(`${APIPATH}${POLLPATH}/${id}`, config)
-    .then((response: AxiosResponse<PollType>) => {
-      console.log(response);
-    })
-    .catch((err) => {
-      console.error(err);
-    });
+  return axios.get<PollType>(`${APIPATH}${POLLPATH}/${id}`, config)
 };
 
 export const putPollById = (

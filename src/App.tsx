@@ -3,10 +3,12 @@ import "./assets/Style.css";
 import { Accounts } from "./services/Accounts";
 import { Polls } from "./services/Polls";
 import { NewAccount } from "./services/NewAccount";
-import { MyHeader } from "./components/MyHeader";
+import { LoggedInHeader } from "./components/LoggedInHeader";
 import { NewPoll } from "./services/NewPoll";
 import { LogIn } from "./components/LogIn";
 import { LogedInAccountProvider, useLogedInAccount } from "./AccountProvider";
+import { DoorlockHeader } from "./components/DoorlockHeader";
+import PollSearch from "./components/PollSearch";
 
 export const App = () => (
   <LogedInAccountProvider>
@@ -15,13 +17,14 @@ export const App = () => (
 );
 
 const App2 = () => {
-  const [choise, setChoise] = useState<number>(1);
+  const [choise, setChoise] = useState<number>(0);
 
   const { loggedInUser } = useLogedInAccount();
   return (
     <div>
-      
-      <MyHeader setPage={setChoise} />
+      {loggedInUser.bearerToken ? 
+        <LoggedInHeader setPage={setChoise} />
+      : <DoorlockHeader setPage={setChoise} /> }
       <div>
         {loggedInUser.bearerToken
           ? (() => {
@@ -30,12 +33,10 @@ const App2 = () => {
                   return <Accounts />;
                 case 2:
                   return <Polls />;
-                case 3:
-                  return <NewAccount />;
                 case 4:
                   return <NewPoll />;
                 default:
-                  return <div>This is an error contact admin</div>;
+                  return <PollSearch/>
               }
             })()
           : (() => {
@@ -43,11 +44,10 @@ const App2 = () => {
               case 3:
                 return <NewAccount />;
               default:
-
-              return <LogIn
-                username={loggedInUser.username}
-                token={loggedInUser.bearerToken}
-            />
+                return <LogIn
+                  username={loggedInUser.username}
+                  token={loggedInUser.bearerToken}
+              />
           }
         })()}
       </div>
