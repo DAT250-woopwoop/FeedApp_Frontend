@@ -44,15 +44,23 @@ export const AccountPage = () => {
           
           <div className="column">
               <h2>Here are all your polls</h2>
-              {pollData.map((poll: PollType) => {
+              {loggedInUser.myVotes.map((myVote: number) => {
+                pollData.map((poll: PollType) => {
+                  if (poll.answers.includes(myVote)){
+                    console.log("Voted on poll: " + poll.id)
+                    return <Poll key={poll.id} {...poll}/>
+                  }
+                })
+              })
+              
+              /* {pollData.map((poll: PollType) => {
                   poll.answers.map((pollVoteId: number) => {
-                    loggedInUser.myVotes.map((userVoteId: number) => {
-                      if (pollVoteId === userVoteId) {
-                        return <Poll key={poll.id} {...poll}/>
-                      }
-                    })
+                    if (loggedInUser.myVotes.includes(pollVoteId)){
+                      console.log("poll I voted on: " + poll.id);
+                      return <Poll key={poll.id} {...poll}/>
+                    }
                   })
-              })}            
+              })}             */}
           </div>
 
         </div>
