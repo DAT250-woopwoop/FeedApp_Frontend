@@ -27,21 +27,38 @@ const PollSearch = () => {
 
 
     return(
-        <div>
+        <div style={{
+            textAlign: "center",
+            alignItems: "center",
+            justifyContent: "center",
+            position: "relative",
+            paddingTop: "2rem",
+        }}>
             <label >
             Search for poll:
             </label>
             <br />
             <input type="text" placeholder="poll ID" onChange={e => setSearch(e.target.value)}/>
             <button onClick={e => sendSearch(search!!)}>Search</button>
+            <div style={{width:"40%",
+    textAlign: "center",
+    alignItems: "center",
+    justifyContent: "center",
+    position: "relative",
+    padding:"1rem 30%"
+                    
+                }}>
 
+            
             {foundPoll ? 
                 <Poll {...foundPoll}/>
                 : undefined
             }
+            </div>
+            </div>
             
 
-        </div>
+
     )
 }
 
