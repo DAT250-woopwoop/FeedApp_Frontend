@@ -30,7 +30,7 @@ export type PollType = {
     yesOption: number;
     noOption: number;
     accountId: number;
-    pollVotes: Array<PollVote>,
+    pollVotes: Array<number>,
 };
 
 export type MakeNewPollRequest = {

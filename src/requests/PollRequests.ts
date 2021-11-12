@@ -3,11 +3,11 @@ import { APIPATH, POLLPATH } from "../constants";
 import { PollType, UpdatePollRequest } from "../services/types";
 import { getConfig } from "./UtilsRequests";
 
-export const yesNoRequest = (id: number, vote: string, token: string) => {
+export const yesNoRequest = (pollId:number, accountId: number, vote: string, token: string) => {
   const config = getConfig(token);
 
   axios
-    .put<PollType>(`${APIPATH}${POLLPATH}/${id}/${vote}`, null, config)
+    .put<PollType>(`${APIPATH}${POLLPATH}/${accountId}/${pollId}`, {"answer": vote.toUpperCase()}, config)
     .then((response: AxiosResponse<PollType>) => {
       console.log(response);
     })
