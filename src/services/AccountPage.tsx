@@ -45,9 +45,13 @@ export const AccountPage = () => {
           <div className="column">
               <h2>Here are all your polls</h2>
               {pollData.map((poll: PollType) => {
-                  if (poll.accountId === loggedInUser.id){
-                      return <Poll key={poll.id} {...poll}/>
-                  } 
+                  poll.answers.map((pollVoteId: number) => {
+                    loggedInUser.myVotes.map((userVoteId: number) => {
+                      if (pollVoteId === userVoteId) {
+                        return <Poll key={poll.id} {...poll}/>
+                      }
+                    })
+                  })
               })}            
           </div>
 

@@ -7,7 +7,7 @@ export const yesNoRequest = (pollId:number, accountId: number, vote: string, tok
   const config = getConfig(token);
 
   axios
-    .put<PollType>(`${APIPATH}${POLLPATH}/${accountId}/${pollId}`, {"answer": vote.toUpperCase()}, config)
+    .post<PollType>(`${APIPATH}${POLLPATH}/${accountId}/${pollId}`, {"answer": vote.toUpperCase()}, config)
     .then((response: AxiosResponse<PollType>) => {
       console.log(response);
     })
