@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { PollType, PollVote } from "./types";
 import "../assets/Style.css";
-import { getAllPollsRequest, getPollById } from "../requests/PollRequests";
+import { getAllPollsRequest } from "../requests/PollRequests";
 import { Poll } from "../components/Poll";
 import { useLogedInAccount } from "../AccountProvider";
 
@@ -44,23 +44,11 @@ export const AccountPage = () => {
           
           <div className="column">
               <h2>Here are all your polls</h2>
-              {loggedInUser.myVotes.map((myVote: number) => {
-                pollData.map((poll: PollType) => {
-                  if (poll.answers.includes(myVote)){
-                    console.log("Voted on poll: " + poll.id)
-                    return <Poll key={poll.id} {...poll}/>
-                  }
-                })
-              })
-              
-              /* {pollData.map((poll: PollType) => {
-                  poll.answers.map((pollVoteId: number) => {
-                    if (loggedInUser.myVotes.includes(pollVoteId)){
-                      console.log("poll I voted on: " + poll.id);
+              {pollData.map((poll: PollType) => {
+                  if (poll.accountId === loggedInUser.id){
                       return <Poll key={poll.id} {...poll}/>
-                    }
-                  })
-              })}             */}
+                  } 
+              })}            
           </div>
 
         </div>
