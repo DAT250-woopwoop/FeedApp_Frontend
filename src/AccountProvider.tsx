@@ -33,6 +33,8 @@ function LogedInAccountProvider(props: any) {
   const [username, setUsername] = useState<string>("");
   const [fname, setFName] = useState<string>("");
   const [lName, setLname] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  
 
   const [loggedInUser, setLogedInUser] = useState<LoggedInUser>({
     bearerToken: bearerToken?.Bearer,
@@ -40,6 +42,7 @@ function LogedInAccountProvider(props: any) {
     username: username,
     f_name: fname,
     l_name: lName,
+    e_mail: email,
   });
 
   useEffect(() => {
@@ -49,6 +52,7 @@ function LogedInAccountProvider(props: any) {
       username: username,
       f_name: fname,
       l_name: lName,
+      e_mail: email,
     });
   }, [bearerToken, userId, username, fname, lName]);
 

@@ -13,14 +13,14 @@ export const Poll = (props: PollType) => {
       Description: {props.pollDesc} <br />
       <div>
         <AnswerButton
-          votes={props.yesOption}
+          votes={3}
           voteType="Yes"
           callback={() =>
             yesNoRequest(loggedInUser.id!!, props.id, "yes", loggedInUser.bearerToken!!)
           }
         />
         <AnswerButton
-          votes={props.noOption}
+          votes={3}
           voteType="No"
           callback={() =>
             yesNoRequest(loggedInUser.id!!, props.id, "no", loggedInUser.bearerToken!!)

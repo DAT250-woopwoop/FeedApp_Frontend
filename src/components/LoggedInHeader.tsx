@@ -10,6 +10,7 @@ export const LoggedInHeader = (props: HeaderProps) => {
       <button onClick={() => props.setPage(2)}>Polls</button>
       <button onClick={() => props.setPage(4)}>Add new poll</button>
       <button onClick={() => props.setPage(5)}>Search</button>
+      <button onClick={() => props.setPage(6)}>My page</button>
 
       </div>
   );

@@ -41,7 +41,7 @@ export const NewPoll = () => {
   };
   useEffect(() => {
       if(newPollData.pollName!==""){
-        postNewPollRequest(newPollData, 1, (e)=>{}, loggedInUser.bearerToken!!)
+        postNewPollRequest(newPollData, loggedInUser.id!!, (e)=>{}, loggedInUser.bearerToken!!)
     }
   }, [loggedInUser.bearerToken, newPollData]);
   const [startDate, setStartDate] = useState(new Date());

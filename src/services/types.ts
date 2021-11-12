@@ -27,10 +27,8 @@ export type PollType = {
     endTime: String;
     privatePoll: boolean;
     closed: boolean;
-    yesOption: number;
-    noOption: number;
+    answers: Array<number>;
     accountId: number;
-    pollVotes: Array<number>,
 };
 
 export type MakeNewPollRequest = {
@@ -83,7 +81,7 @@ export type UpdatePollRequest = {
 
 export type PollVote = {
     id: number,
-    votes: number,
+    answer: string,
     pollId: number,
     accountId: number,
 }
@@ -103,4 +101,5 @@ export type LoggedInUser = {
     username: string | undefined;
     f_name: string | undefined;
     l_name: string | undefined;
+    e_mail: string | undefined;
 }

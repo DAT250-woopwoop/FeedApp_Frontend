@@ -14,15 +14,29 @@ h1 {
 }
 
 .Content {
-  height: 200px;
-  display: inline-block;
-  align-items: center;
-  justify-content: center;
+  width: 90vw;
+  margin: 0 auto;
 }
 
+.row {
+  display: flex;
+}
+
+.column {
+  flex: 50;
+}
+
+/* .Column {
+  display: flex;
+  flex: 50%;
+  display: inline-block;
+  border: solid rgb(24, 144, 219) 3px;
+} */
+
 .Box {
-  width: 90vw;
+  /* width: 90vw; */
   box-sizing: content-box;
   border: solid rgb(24, 144, 219) 3px;
   padding: 5px;
 }
+
