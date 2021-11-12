@@ -9,6 +9,7 @@ import { LogIn } from "./components/LogIn";
 import { LogedInAccountProvider, useLogedInAccount } from "./AccountProvider";
 import { DoorlockHeader } from "./components/DoorlockHeader";
 import PollSearch from "./components/PollSearch";
+import { MinSide } from "./components/MinSide";
 
 export const App = () => (
   <LogedInAccountProvider>
@@ -35,8 +36,12 @@ const App2 = () => {
                   return <Polls />;
                 case 4:
                   return <NewPoll />;
-                default:
+                case 5: 
+                  return <MinSide />
+                case 6:
                   return <PollSearch/>
+                default:
+                  return (<h1>HMMMMM</h1>)
               }
             })()
           : (() => {
