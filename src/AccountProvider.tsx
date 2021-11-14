@@ -34,7 +34,6 @@ function LogedInAccountProvider(props: any) {
   const [fname, setFName] = useState<string>("");
   const [lName, setLname] = useState<string>("");
   const [email, setEmail] = useState<string>("");
-  const [myVotes, setMyVotes] = useState<number[]>([]);
   
 
   const [loggedInUser, setLogedInUser] = useState<LoggedInUser>({
@@ -43,8 +42,7 @@ function LogedInAccountProvider(props: any) {
     username: username,
     f_name: fname,
     l_name: lName,
-    e_mail: email,
-    myVotes: myVotes
+    e_mail: email
   });
 
   useEffect(() => {
@@ -54,8 +52,7 @@ function LogedInAccountProvider(props: any) {
       username: username,
       f_name: fname,
       l_name: lName,
-      e_mail: email,
-      myVotes: myVotes
+      e_mail: email
     });
   }, [bearerToken, userId, username, fname, lName]);
 

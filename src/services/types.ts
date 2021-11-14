@@ -17,6 +17,7 @@ export type AccountType = {
     f_name: String;
     l_name: String;
     polls: Array<number>;
+    myVotes: Array<number>;
 };
 
 export type PollType = {
@@ -57,6 +58,7 @@ export type AccountByIdResponse = {
     f_name: String,
     l_name: String,
     polls: Array<number>,
+    myVotes: Array<number>,
     id: number,
 }
 
@@ -102,5 +104,4 @@ export type LoggedInUser = {
     f_name: string | undefined;
     l_name: string | undefined;
     e_mail: string | undefined;
-    myVotes: Array<number>
 }

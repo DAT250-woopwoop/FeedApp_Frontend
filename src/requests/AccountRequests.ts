@@ -144,7 +144,6 @@ export const getAccountByUsernameRequest = (
         f_name: res.data.f_name,
         l_name: res.data.l_name,
         e_mail: res.data.e_mail,
-        myVotes: res.data.myVotes,
         bearerToken: token,
       })
     );
