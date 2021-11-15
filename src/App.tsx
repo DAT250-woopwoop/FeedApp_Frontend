@@ -79,9 +79,9 @@ const App2 = () => {
                 case 4:
                   return <NewPoll />;
                 case 5:
-                  return <PollSearch/>
+                  return <AccountPage />
                 default:
-                  return <AccountPage/>
+                  return <PollSearch />
               }
             })()
           : (() => {
