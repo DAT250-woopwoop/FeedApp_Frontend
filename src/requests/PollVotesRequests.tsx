@@ -22,18 +22,11 @@ export const getAllPollVoteRequest = (
 
   export const getPollVoteByIdRequest = (
     id: number,
-    setPollVote: (arg0: PollVote) => void,
     token: string
   ) => {
     const config = getConfig(token);
   
-    axios
-      .get<PollVote>(`${APIPATH}${POLLPATH}/${id}`, config)
-      .then((response: AxiosResponse<PollVote>) => {
-        console.log(response);
-        setPollVote(response.data);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
+    return axios
+      .get<PollVote>(`${APIPATH}${POLLVOTEPATH}/${id}`, config)
+      
   };

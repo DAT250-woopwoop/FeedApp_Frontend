@@ -1,10 +1,11 @@
-import { AccountType, PollType } from "../services/types";
+import { AccountType, PollType, PollVote } from "../services/types";
 import { AnswerButton } from "./AnswerButton";
 import { yesNoRequest } from "../requests/PollRequests";
 import "../assets/Style.css";
 import { useCookies } from "react-cookie";
 import { useEffect, useState } from "react";
 import { getAccountByUsernameRequest } from "../requests/AccountRequests";
+import { getPollVoteByIdRequest } from "../requests/PollVotesRequests";
 
 export const Poll = (props: PollType) => {
   //const { loggedInUser } = useLogedInAccount();
@@ -12,8 +13,36 @@ export const Poll = (props: PollType) => {
   const [cookie] = useCookies(["token", "username"])
   const [acc, setAcc] = useState<AccountType>();
 
+  const [yesVotes, setYesVotes] = useState<Array<PollVote>>([])
+  const [noVotes, setNoVotes] = useState<Array<PollVote>>([])
+
+
   useEffect(() => {
     getAccountByUsernameRequest(cookie.username, cookie.token, setAcc)
+  }, [])
+
+  useEffect(() => {
+    let yes :PollVote[] = []
+    let no :PollVote[] = []
+
+    props.answers.forEach(async element => {
+      await getPollVoteByIdRequest(element, cookie.token).then(res => {
+        
+        if (res.status === 200){
+          if (res.data.answer === "YES") {
+            console.log(res);
+            
+            yes = [...yes, res.data]
+          } else {
+            no = [...no, res.data]
+          }
+        }
+      })
+      setYesVotes(yes)
+      setNoVotes(no)
+    });
+    
+    
   }, [])
 
   return (
@@ -28,8 +57,10 @@ export const Poll = (props: PollType) => {
           position: "relative",
         }}
       >
+        {console.log(yesVotes)
+        }
         <AnswerButton
-          votes={3}
+          votes={yesVotes.length}
           voteType="Yes"
           callback={() =>
             yesNoRequest(
@@ -41,7 +72,7 @@ export const Poll = (props: PollType) => {
           }
         />
         <AnswerButton
-          votes={3}
+          votes={noVotes.length}
           voteType="No"
           callback={() =>
             yesNoRequest(
