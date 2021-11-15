@@ -4,11 +4,11 @@ import "../assets/Style.css";
 import { getAllPollsRequest } from "../requests/PollRequests";
 import { Poll } from "../components/Poll";
 import { useCookies } from "react-cookie";
-import { getAccountByUsernameRequest } from "../requests/AccountRequests";
+import { getAccountByUsernameRequest, getAccountByIdRequest } from "../requests/AccountRequests";
 
 export const AccountPage = () => {
   const [pollData, setPollData] = useState<PollType[]>([]);
-  const [account, setAccountData] = useState<AccountByIdResponse>();
+  // const [account, setAccountData] = useState<AccountByIdResponse>();
 
   const [cookie] = useCookies(["token", "username"])
   const [acc, setAcc] = useState<AccountType>()
@@ -21,13 +21,14 @@ export const AccountPage = () => {
     getAllPollsRequest(setPollData, cookie.token);
   }, [cookie.token]);
 
-  useEffect(() => {
-    getAccountByUsernameRequest(cookie.username, cookie.token, setAcc)
-  }, [])
 
   useEffect(() => {
     getAccountByUsernameRequest(cookie.username, cookie.token, setAcc)
   }, [cookie.token, cookie.username])
+
+  // useEffect(() => {
+  //   getAccountByIdRequest(acc?.id!!, setAccountData, cookie.token);
+  // }, [cookie.token, cookie.username])
 
 
   return (
@@ -55,7 +56,7 @@ export const AccountPage = () => {
               <h2>Polls you have voted on:</h2>
               {pollData.map((poll: PollType) => {
                 return (
-                  account?.myVotes.map((accountVote: number) => {
+                  acc?.myVotes.map((accountVote: number) => {
                     if (poll.answers.includes(accountVote)) {
                       console.log("Inni if-en, poll.id: " + poll.id)
                       return <Poll key={poll.id} {...poll}/>

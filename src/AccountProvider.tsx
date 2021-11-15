@@ -47,7 +47,8 @@ function LogedInAccountProvider(props: any) {
     username: username,
     f_name: fname,
     l_name: lName,
-    e_mail: email
+    e_mail: email,
+    myVotes: myVotes
   });
 
   useEffect(() => {
@@ -57,7 +58,8 @@ function LogedInAccountProvider(props: any) {
       username: username,
       f_name: fname,
       l_name: lName,
-      e_mail: email
+      e_mail: email,
+      myVotes: myVotes
     });
   }, [bearerToken, userId, username, fname, lName, email, myVotes]);
 

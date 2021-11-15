@@ -104,4 +104,5 @@ export type LoggedInUser = {
     f_name: string | undefined;
     l_name: string | undefined;
     e_mail: string | undefined;
+    myVotes: Array<number>;
 }
