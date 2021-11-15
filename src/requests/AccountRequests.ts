@@ -62,18 +62,11 @@ export const makeNewAccountRequest = (data: MakeNewAccountRequest) => {
 };
 
 export const loginAccountRequest = (
-  data: LoginAccountRequest,
-  callback: (arg0: any) => void
+  data: LoginAccountRequest
 ) => {
-  axios
+  return axios
     .post<BearerToken>(`${APIPATH}/login`, data)
-    .then((response: AxiosResponse<BearerToken>) => {
-      console.log(response.data.Bearer);
-      callback(response.data);
-    })
-    .catch((err) => {
-      console.error(err);
-    });
+    
 };
 
 export const getAccountByIdRequest = (
@@ -134,6 +127,8 @@ export const getAccountByUsernameRequest = (
   callback: (arg0: any) => void
 ) => {
   const config = getConfig(token);
+  console.log(username);
+  
 
   axios
     .get<LoggedInUser>(`${APIPATH}${ACCOUNTPATH}/username/${username}`, config)

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { MakeNewAccountRequest } from "./types";
 import { makeNewAccountRequest } from "../requests/AccountRequests";
 import "../assets/Style.css";
+import { useCookies } from "react-cookie";
 
 export const NewAccount = () => {
   const [newAccountDetail, setNewAccountDetail] =

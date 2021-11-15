@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
-import { postNewPollRequest } from "../requests/AccountRequests";
-import { MakeNewPollRequest } from "./types";
+import { getAccountByUsernameRequest, postNewPollRequest } from "../requests/AccountRequests";
+import { AccountType, MakeNewPollRequest } from "./types";
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
-import { useLogedInAccount } from "../AccountProvider";
+import { useCookies } from "react-cookie";
 
 export const NewPoll = () => {
-  const { loggedInUser } = useLogedInAccount()
+
+  const [cookies] = useCookies(["token", "username"])
+  const [account, setAccount] = useState<AccountType>();
   const [newPollData, setNewPollData] = useState<MakeNewPollRequest>({
     pollDesc: "",
     pollName: "",
@@ -17,6 +19,10 @@ export const NewPoll = () => {
     yesOption: 0, // burde bli satt i backend
     noOption: 0, // burde bli satt i backend
   });
+
+  useEffect(() => {
+    getAccountByUsernameRequest(cookies.username, cookies.token, setAccount)
+  },[])
 
   const collectForm = (event: any) => {
     event.preventDefault();
@@ -41,9 +47,9 @@ export const NewPoll = () => {
   };
   useEffect(() => {
       if(newPollData.pollName!==""){
-        postNewPollRequest(newPollData, loggedInUser.id!!, (e)=>{}, loggedInUser.bearerToken!!)
+        postNewPollRequest(newPollData, account?.id!!, (e)=>{}, cookies.token)
     }
-  }, [loggedInUser.bearerToken, newPollData]);
+  }, [account?.id, cookies.token, newPollData]);
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
   return (

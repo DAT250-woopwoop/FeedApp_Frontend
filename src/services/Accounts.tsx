@@ -2,17 +2,18 @@ import { useState, useEffect } from "react";
 import { AccountType } from "./types";
 import "../assets/Style.css";
 import { getAllAccountsRequest } from "../requests/AccountRequests";
-import { useLogedInAccount } from "../AccountProvider";
+import { useCookies } from "react-cookie";
+
 
 export const Accounts = () => {
 
   const [accountData, setAccountData] = useState<AccountType[]>([]);
 
-  const { loggedInUser } = useLogedInAccount();
+  const [cookies] = useCookies(["token"])
 
   useEffect(() => {
-    getAllAccountsRequest(setAccountData, loggedInUser.bearerToken!!);
-  }, [loggedInUser.bearerToken]);
+    getAllAccountsRequest(setAccountData, cookies.token);
+  }, [cookies.token]);
 
   return (
     <div>

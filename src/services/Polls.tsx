@@ -4,18 +4,17 @@ import "../assets/Style.css";
 import { postNewPollRequest } from "../requests/AccountRequests";
 import { getAllPollsRequest } from "../requests/PollRequests";
 import { Poll } from "../components/Poll";
-import { useLogedInAccount } from "../AccountProvider";
+
+import { useCookies } from "react-cookie";
 
 export const Polls = () => {
   const [pollData, setPollData] = useState<PollType[]>([]);
 
-  const { loggedInUser } = useLogedInAccount()
-
-
+  const [cookies] = useCookies(["token"])
 
   useEffect(() => {
-    getAllPollsRequest(setPollData, loggedInUser.bearerToken!!);
-  }, [loggedInUser.bearerToken]);
+    getAllPollsRequest(setPollData, cookies.token);
+  }, [cookies.token]);
 
   return (
     <div>
@@ -34,7 +33,7 @@ export const Polls = () => {
             },
             1,
             setPollData,
-            loggedInUser.bearerToken!!
+            cookies.token
           );
         }}
       >

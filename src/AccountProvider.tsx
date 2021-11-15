@@ -5,12 +5,14 @@ import {
   createContext,
   useCallback,
 } from "react";
+import { useCookies } from "react-cookie";
 import { getAccountByUsernameRequest, loginAccountRequest } from "./requests/AccountRequests";
 import { BearerToken, LoggedInUser, LoginAccountRequest } from "./services/types";
 
 type LoggedInAccountContextValue = {
     login: (username:string, password:string) => void,
     loggedInUser: LoggedInUser,
+    getAllInfoOfAccount: () => void
 }
 
 const LoggedInAccountContext = createContext<LoggedInAccountContextValue | undefined>(undefined);
@@ -35,6 +37,8 @@ function LogedInAccountProvider(props: any) {
   const [lName, setLname] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [myVotes, setMyVotes] = useState<number[]>([]);
+
+  const [cookies, setCookie] = useCookies(["token", "username"])
   
 
   const [loggedInUser, setLogedInUser] = useState<LoggedInUser>({
@@ -57,7 +61,7 @@ function LogedInAccountProvider(props: any) {
       e_mail: email,
       myVotes: myVotes
     });
-  }, [bearerToken, userId, username, fname, lName]);
+  }, [bearerToken, userId, username, fname, lName, email, myVotes]);
 
   const login = useCallback(
     (username:string, password: string) => {
@@ -67,20 +71,31 @@ function LogedInAccountProvider(props: any) {
             password: password,
           };
 
-         loginAccountRequest(login, setBearerToken)
-      }, []
+         loginAccountRequest(login).then((res) => {
+           setCookie("token", res.data.Bearer, {path:"/", expires:new Date(Date.now() + (3600 * 60 * 24))});
+           setCookie("username", username,  {path:"/", expires:new Date(Date.now() + (3600 * 60 * 24))});
+         })
+      }, [setCookie]
   )
 
+  const getAllInfoOfAccount = useCallback(
+    () => {
+      getAccountByUsernameRequest(username, cookies.token, setLogedInUser)
+    }, [cookies.token, username]
+  )
+/*
   useEffect(() => {
-    if(bearerToken.Bearer !== "" && bearerToken.Bearer !== undefined ) {
-        getAccountByUsernameRequest(username, bearerToken.Bearer, setLogedInUser)
+    if(cookies.token) {
+        getAccountByUsernameRequest(username, cookies.token, setLogedInUser)
     }
-  }, [bearerToken, username])
+  }, [bearerToken.Bearer, cookies.token, username])
+  */
 
   return (
     <LoggedInAccountContext.Provider
       value={{
         login,
+        getAllInfoOfAccount,
         loggedInUser,
       }}
       {...props}

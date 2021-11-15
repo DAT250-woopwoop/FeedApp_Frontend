@@ -1,34 +1,42 @@
 import { useState, useEffect } from "react";
-import { PollType, PollVote } from "./types";
+import { AccountType, PollType } from "./types";
 import "../assets/Style.css";
 import { getAllPollsRequest } from "../requests/PollRequests";
 import { Poll } from "../components/Poll";
-import { useLogedInAccount } from "../AccountProvider";
+import { useCookies } from "react-cookie";
+import { getAccountByUsernameRequest } from "../requests/AccountRequests";
 
 export const AccountPage = () => {
   const [pollData, setPollData] = useState<PollType[]>([]);
 
+  const [cookie] = useCookies(["token", "username"])
+  const [acc, setAcc] = useState<AccountType>()
 
-  const { loggedInUser } = useLogedInAccount()
+  //const { loggedInUser } = useLogedInAccount()
 
 
 
   useEffect(() => {
-    getAllPollsRequest(setPollData, loggedInUser.bearerToken!!);
-  }, [loggedInUser.bearerToken]);
+    getAllPollsRequest(setPollData, cookie.token);
+  }, [cookie.token]);
 
+  useEffect(() => {
+    getAccountByUsernameRequest(cookie.username, cookie.token, setAcc)
+  }, [])
 
-
+  useEffect(() => {
+    getAccountByUsernameRequest(cookie.username, cookie.token, setAcc)
+  }, [cookie.token, cookie.username])
 
 
   return (
     <div>
       <div className="Content">
-        <div className="Box" key={loggedInUser.id}>
-          Username: {loggedInUser.username} <br />
-          First name: {loggedInUser.f_name} <br />
-          Last Naem: {loggedInUser.l_name} <br />
-          Email: {loggedInUser.e_mail} <br />
+        <div className="Box" key={acc?.id}>
+          Username: {acc?.username} <br />
+          First name: {acc?.f_name} <br />
+          Last Naem: {acc?.l_name} <br />
+          Email: {acc?.e_mail} <br />
         </div>
 
         <div className="row">
@@ -36,7 +44,7 @@ export const AccountPage = () => {
           <div className="column">
               <h2>Here are all your polls</h2>
               {pollData.map((poll: PollType) => {
-                  if (poll.accountId === loggedInUser.id){
+                  if (poll.accountId === acc?.id){
                       return <Poll key={poll.id} {...poll}/>
                   } 
               })}
@@ -45,7 +53,7 @@ export const AccountPage = () => {
           <div className="column">
               <h2>Here are all your polls</h2>
               {pollData.map((poll: PollType) => {
-                  if (poll.accountId === loggedInUser.id){
+                  if (poll.accountId === acc?.id){
                       return <Poll key={poll.id} {...poll}/>
                   } 
               })}            
