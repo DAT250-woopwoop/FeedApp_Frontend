@@ -18,27 +18,6 @@ export const Polls = () => {
 
   return (
     <div>
-      <button
-        onClick={() => {
-          postNewPollRequest(
-            {
-              pollDesc: "Dette er den jeg sender nå?",
-              pollName: "Dette er en ny",
-              startTime: "2021-03-30 18:10:00",
-              endTime: "2021-12-12 19:10:00",
-              privatePoll: true,
-              closed: false,
-              yesOption: 0,
-              noOption: 0,
-            },
-            1,
-            setPollData,
-            cookies.token
-          );
-        }}
-      >
-        Make new poll
-      </button>
       <h2>Here are all the polls</h2>
       <div className="Content">
         {pollData.map((poll: PollType) => {
