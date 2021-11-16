@@ -7,8 +7,7 @@ import { useEffect, useState } from "react";
 import { getAccountByUsernameRequest } from "../requests/AccountRequests";
 import { getPollVoteByIdRequest } from "../requests/PollVotesRequests";
 
-export const Poll = (props: PollType) => {
-  //const { loggedInUser } = useLogedInAccount();
+export const DisablePoll = (props: PollType) => {
 
   const [cookie] = useCookies(["token", "username"])
   const [acc, setAcc] = useState<AccountType>();
@@ -58,6 +57,7 @@ export const Poll = (props: PollType) => {
         }}
       >
         <AnswerButton
+        disable={true}
           votes={yesVotes.length}
           voteType="Yes"
           callback={() =>
@@ -70,6 +70,8 @@ export const Poll = (props: PollType) => {
           }
         />
         <AnswerButton
+        disable={true}
+
           votes={noVotes.length}
           voteType="No"
           callback={() =>
