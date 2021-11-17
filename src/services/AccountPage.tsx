@@ -5,7 +5,6 @@ import { getAllPollsRequest } from "../requests/PollRequests";
 import { Poll } from "../components/Poll";
 import { useCookies } from "react-cookie";
 import { getAccountByUsernameRequest, getAccountByIdRequest } from "../requests/AccountRequests";
-import { DisablePoll } from "../components/disabledPoll";
 
 export const AccountPage = () => {
   const [pollData, setPollData] = useState<PollType[]>([]);
@@ -56,14 +55,16 @@ export const AccountPage = () => {
           <div className="column">
               <h2>Polls you have voted on:</h2>
               {pollData.map((poll: PollType) => {
-                return (
-                  acc?.myVotes.map((accountVote: number) => {
-                    if (poll.answers.includes(accountVote)) {
-                      console.log("Inni if-en, poll.id: " + poll.id)
-                      return <DisablePoll key={poll.id} {...poll}/>
-                    }
-                  })
-                )                
+                if (poll.accountId != acc?.id){
+                  return (
+                    acc?.myVotes.map((accountVote: number) => {
+                      if (poll.answers.includes(accountVote)) {
+                        console.log("Inni if-en, poll.id: " + poll.id)
+                        return <Poll key={poll.id} {...poll}/>
+                      }
+                    })
+                  )
+                }                
               })}            
           </div>
 

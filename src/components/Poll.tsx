@@ -4,8 +4,10 @@ import { yesNoRequest } from "../requests/PollRequests";
 import "../assets/Style.css";
 import { useCookies } from "react-cookie";
 import { useEffect, useState } from "react";
-import { getAccountByUsernameRequest } from "../requests/AccountRequests";
+import { getAccountByUsernameRequest, returnAccountByUsernameRequest } from "../requests/AccountRequests";
 import { getPollVoteByIdRequest } from "../requests/PollVotesRequests";
+import { ActivePoll } from "./ActivePoll"
+import { DisablePoll } from "./disabledPoll";
 
 export const Poll = (props: PollType) => {
   //const { loggedInUser } = useLogedInAccount();
@@ -13,8 +15,8 @@ export const Poll = (props: PollType) => {
   const [cookie] = useCookies(["token", "username"])
   const [acc, setAcc] = useState<AccountType>();
 
-  const [yesVotes, setYesVotes] = useState<Array<PollVote>>([])
-  const [noVotes, setNoVotes] = useState<Array<PollVote>>([])
+
+  const [disabeld, setDisabeld] = useState<boolean>(false)
 
 
   useEffect(() => {
@@ -22,66 +24,30 @@ export const Poll = (props: PollType) => {
   }, [])
 
   useEffect(() => {
-    getPollVotes()
-  }, [])
-
-  const getPollVotes = () => {
     let yes :PollVote[] = []
     let no :PollVote[] = []
-    
+
     props.answers.forEach(async element => {
-      await getPollVoteByIdRequest(element, cookie.token).then(res => {
-        
-        if (res.status === 200){
-          if (res.data.answer === "YES") {
-            yes = [...yes, res.data]
-          } else {
-            no = [...no, res.data]
-          }
+      await returnAccountByUsernameRequest(cookie.username, cookie.token).then(async accRes => {
+        await getPollVoteByIdRequest(element, cookie.token).then(res => {
+          console.log("res.data.accountId: " + res.data.accountId)
+          console.log("accRes.data.id: " + accRes.data.id)
+          if (res.data.accountId ===  accRes.data.id) {
+            setDisabeld(true)
         }
+        })
+
+        
       })
-      setYesVotes(yes)
-      setNoVotes(no)
     });
-  }
-  
+    
+    
+  }, [])
+
   return (
-    <div className="Box" key={props.id}>
-      Name: {props.pollName} <br />
-      Description: {props.pollDesc} <br />
-      <div
-        style={{
-          textAlign: "center",
-          alignItems: "center",
-          justifyContent: "center",
-          position: "relative",
-        }}
-      >
-        <AnswerButton
-          votes={yesVotes.length}
-          voteType="Yes"
-          callback={() =>
-            yesNoRequest(
-              props.id,
-              acc?.id!!,
-              "yes",
-              cookie.token,
-            )
-          }
-        />
-        <AnswerButton
-          votes={noVotes.length}
-          voteType="No"
-          callback={() =>
-            yesNoRequest(
-              props.id,
-              acc?.id!!,
-              "no",
-              cookie.token,
-            )
-          }
-        />
-      </div>
-    </div>
+    disabeld ?
+      (<DisablePoll key={props.id} {...props}/>)
+    :
+      (<ActivePoll key={props.id} {...props}/>)
   );
 };

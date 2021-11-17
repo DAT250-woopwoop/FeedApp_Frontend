@@ -1,13 +1,14 @@
 import { AccountType, PollType, PollVote } from "../services/types";
-import { DisabledAnswerButton } from "./AnswerButton";
+import { AnswerButton } from "./AnswerButton";
 import { yesNoRequest } from "../requests/PollRequests";
 import "../assets/Style.css";
 import { useCookies } from "react-cookie";
 import { useEffect, useState } from "react";
-import { getAccountByUsernameRequest, returnAccountByUsernameRequest } from "../requests/AccountRequests";
+import { getAccountByUsernameRequest } from "../requests/AccountRequests";
 import { getPollVoteByIdRequest } from "../requests/PollVotesRequests";
 
-export const DisablePoll = (props: PollType) => {
+export const ActivePoll = (props: PollType) => {
+  //const { loggedInUser } = useLogedInAccount();
 
   const [cookie] = useCookies(["token", "username"])
   const [acc, setAcc] = useState<AccountType>();
@@ -15,52 +16,37 @@ export const DisablePoll = (props: PollType) => {
   const [yesVotes, setYesVotes] = useState<Array<PollVote>>([])
   const [noVotes, setNoVotes] = useState<Array<PollVote>>([])
 
-  const [yesDisabled, setYesDisabled] = useState<boolean>(false)
-  const [noDisabled, setNoDisabled] = useState<boolean>(false)
-
 
   useEffect(() => {
     getAccountByUsernameRequest(cookie.username, cookie.token, setAcc)
   }, [])
 
   useEffect(() => {
-    getPollVotes()
-  }, [])
-
-  const getPollVotes = () => {
     let yes :PollVote[] = []
     let no :PollVote[] = []
-    
+
     props.answers.forEach(async element => {
-      await getPollVoteByIdRequest(element, cookie.token).then(async res => {
-        await returnAccountByUsernameRequest(cookie.username, cookie.token).then(accRes => {
+      await getPollVoteByIdRequest(element, cookie.token).then(res => {
         
-          if (res.status === 200){
-            if (res.data.answer === "YES") {
-              yes = [...yes, res.data]
-              if (res.data.accountId === accRes.data.id){
-                setYesDisabled(true)
-              }
-            } else {
-              no = [...no, res.data]
-              if (res.data.accountId === accRes.data.id){
-                setNoDisabled(true)
-              }
-            }
+        if (res.status === 200){
+          if (res.data.answer === "YES") {
+            console.log(res);
+            
+            yes = [...yes, res.data]
+          } else {
+            no = [...no, res.data]
           }
-        })
+        }
       })
       setYesVotes(yes)
       setNoVotes(no)
     });
-  }
-  
+    
+    
+  }, [])
+
   return (
-    <div className="Box" key={props.id}
-      style={{
-        backgroundColor: "rgb(231, 227, 227)",
-        color: "gray"
-      }}>
+    <div className="Box" key={props.id}>
       Name: {props.pollName} <br />
       Description: {props.pollDesc} <br />
       <div
@@ -68,12 +54,12 @@ export const DisablePoll = (props: PollType) => {
           textAlign: "center",
           alignItems: "center",
           justifyContent: "center",
-          position: "relative"
+          position: "relative",
         }}
       >
-        <DisabledAnswerButton
-          ans={yesDisabled}
-          disable={true}
+        {console.log(yesVotes)
+        }
+        <AnswerButton
           votes={yesVotes.length}
           voteType="Yes"
           callback={() =>
@@ -85,9 +71,7 @@ export const DisablePoll = (props: PollType) => {
             )
           }
         />
-        <DisabledAnswerButton
-          ans={noDisabled}
-          disable={true}
+        <AnswerButton
           votes={noVotes.length}
           voteType="No"
           callback={() =>

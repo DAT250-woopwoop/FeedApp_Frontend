@@ -129,7 +129,6 @@ export const getAccountByUsernameRequest = (
   const config = getConfig(token);
   console.log(username);
   
-
   axios
     .get<LoggedInUser>(`${APIPATH}${ACCOUNTPATH}/username/${username}`, config)
     .then((res: AxiosResponse<LoggedInUser>) =>
@@ -144,3 +143,11 @@ export const getAccountByUsernameRequest = (
       })
     );
 };
+
+export const returnAccountByUsernameRequest = (
+  username: string,
+  token: string
+) => {
+  const config = getConfig(token);
+  return axios.get<LoggedInUser>(`${APIPATH}${ACCOUNTPATH}/username/${username}`, config)
+}
