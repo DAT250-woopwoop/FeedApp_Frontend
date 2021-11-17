@@ -1,4 +1,5 @@
 import { useCookies } from "react-cookie";
+import "../assets/Style.css";
 
 type HeaderProps = {
   setPage: (arg0: number) => void,
@@ -10,12 +11,12 @@ export const LoggedInHeader = (props: HeaderProps) => {
   return (
     <div className="App">
       <h1>Welcome to FeedApp</h1>
-      <button onClick={() => props.setPage(1)}>Users</button>
-      <button onClick={() => props.setPage(2)}>Polls</button>
-      <button onClick={() => props.setPage(4)}>Add new poll</button>
-      <button onClick={() => props.setPage(5)}>My page</button>
-      <button onClick={() => props.setPage(6)}>Search</button>
-      <button onClick={() => {
+      <button className="button" onClick={() => props.setPage(1)}>Users</button>
+      <button className="button" onClick={() => props.setPage(2)}>Polls</button>
+      <button className="button" onClick={() => props.setPage(4)}>Add new poll</button>
+      <button className="button" onClick={() => props.setPage(5)}>My page</button>
+      <button className="button" onClick={() => props.setPage(6)}>Search</button>
+      <button className="button" onClick={() => {
         removeCookie("username");
         removeCookie("token")
       }}>Sign out</button>

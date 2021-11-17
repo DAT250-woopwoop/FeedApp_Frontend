@@ -13,13 +13,9 @@ export const AnswerButton = (
     ) => {
         return(
             <button 
+            className="answerButton"
             disabled={props.disable ? props.disable : false}
-            style={{
-                boxShadow: "rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px",
-                margin: "1rem",
-                width:"10rem",
-                height:"10rem",
-            }}
+           
             onClick={() => props.callback()} >{props.voteType} ({props.votes})</button>
         )
 }
@@ -31,12 +27,9 @@ export const DisabledAnswerButton = (
         const textColor = props.ans ? "white" : "gray"
         return(
             <button 
+            className="answerButton"
             disabled={props.disable ? props.disable : false}
             style={{
-                boxShadow: "rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px",
-                margin: "1rem",
-                width:"10rem",
-                height:"10rem",
                 backgroundColor: backColor,
                 color: textColor
             }}

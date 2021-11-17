@@ -4,6 +4,7 @@ import { getPollById } from "../requests/PollRequests";
 import { PollType } from "../services/types";
 import { Poll } from "./Poll";
 
+
 const PollSearch = () => {
 
   const [cookies] = useCookies(["token"])
@@ -49,7 +50,7 @@ const PollSearch = () => {
           alignItems: "center",
           justifyContent: "center",
           position: "relative",
-          padding: "1rem 30%",
+          padding: "1rem 30%"
         }}
       >
         {foundPoll ? <Poll {...foundPoll} /> : undefined}
