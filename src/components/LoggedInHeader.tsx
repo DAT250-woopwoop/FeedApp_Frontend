@@ -11,7 +11,7 @@ export const LoggedInHeader = (props: HeaderProps) => {
   return (
     <div className="App">
       <h1>Welcome to FeedApp</h1>
-      <button className="button" onClick={() => props.setPage(1)}>Users</button>
+      {/* <button className="button" onClick={() => props.setPage(1)}>Users</button> */}
       <button className="button" onClick={() => props.setPage(2)}>Polls</button>
       <button className="button" onClick={() => props.setPage(4)}>Add new poll</button>
       <button className="button" onClick={() => props.setPage(5)}>My page</button>

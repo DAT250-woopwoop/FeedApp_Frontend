@@ -72,8 +72,8 @@ const App2 = () => {
         {cookies.token 
           ? (() => {
               switch (choise) {
-                case 1:
-                  return <Accounts />;
+                // case 1:
+                //   return <Accounts />;
                 case 4:
                   return <NewPoll />;
                 case 5:
