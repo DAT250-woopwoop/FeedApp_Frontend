@@ -3,6 +3,7 @@ import { useCookies } from "react-cookie";
 import { getPollById } from "../requests/PollRequests";
 import { PollType } from "../services/types";
 import { Poll } from "./Poll";
+import "../assets/Style.css"
 
 
 const PollSearch = () => {
@@ -26,23 +27,33 @@ const PollSearch = () => {
   };
 
   return (
-    <div
-      style={{
-        textAlign: "center",
-        alignItems: "center",
-        justifyContent: "center",
-        position: "relative",
-        paddingTop: "2rem",
-      }}
+    <div className="Content"
+      // style={{
+      //   textAlign: "center",
+      //   alignItems: "center",
+      //   justifyContent: "center",
+      //   position: "relative",
+      //   paddingTop: "2rem",
+      // }}
     >
-      <label>Search for poll:</label>
-      <br />
+      <h2>Search for poll:</h2>
       <input
         type="text"
         placeholder="poll ID"
         onChange={(e) => setSearch(e.target.value)}
       />
-      <button onClick={(e) => sendSearch(search!!)}>Search</button>
+      <br />
+      <button 
+        onClick={(e) => sendSearch(search!!)}
+        // style={{
+        //   borderRadius: "10px",
+        //   padding: "5px",
+        //   margin: "5px",
+        //   border: "1px solid"
+        // }}
+      >
+        Search
+      </button>
       <div
         style={{
           width: "40%",

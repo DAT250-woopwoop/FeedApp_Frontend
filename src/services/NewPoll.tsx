@@ -53,18 +53,18 @@ export const NewPoll = () => {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
   return (
-    <div>
+    <div className="Content">
       <h2>Make new poll</h2>
 
       <form onSubmit={(evt) => collectForm(evt)}>
         <div>
           <label>
-            Title: <input type="title" id="title" />
+            Title: <br /> <input type="title" id="title" />
           </label>
         </div>
         <div>
           <label>
-            Description: <input type="desc" id="desc" />
+            Description: <br /> <input type="desc" id="desc" />
           </label>
         </div>
         <div>
@@ -77,11 +77,11 @@ export const NewPoll = () => {
             End time: <DatePicker showTimeInput selected={endDate} onChange={(date:Date) => setEndDate(date)} />
           </label>
         </div>
-        <div>
+        {/* <div>
           <label>
-            Private: <input defaultValue="False" type="priv" id="priv" />
+            Private: <br /> <input defaultValue="False" type="priv" id="priv" />
           </label>
-        </div>
+        </div> */}
         <div>
           <button type="submit">Register new poll</button>
         </div>

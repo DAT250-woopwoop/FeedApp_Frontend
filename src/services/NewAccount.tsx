@@ -48,33 +48,33 @@ export const NewAccount = () => {
   }, [newAccountDetail]);
 
   return (
-    <div>
+    <div className="Content">
       <h2>Make new user</h2>
 
       <form onSubmit={(evt) => SendForm(evt, setNewAccountDetail)}>
         <div>
           <label>
-            Username: <input type="username" id="username" />
+            Username: <br /> <input type="username" id="username" />
           </label>
         </div>
         <div>
           <label>
-            First name: <input type="fName" id="fName" />
+            First name: <br /> <input type="fName" id="fName" />
           </label>
         </div>
         <div>
           <label>
-            Last name: <input type="lName" id="lName" />
+            Last name: <br /> <input type="lName" id="lName" />
           </label>
         </div>
         <div>
           <label>
-            Email: <input type="email" id="email" />
+            Email: <br /> <input type="email" id="email" />
           </label>
         </div>
         <div>
           <label>
-            Password: <input type="password" id="password" />
+            Password: <br /> <input type="password" id="password" />
           </label>
         </div>
         <div>

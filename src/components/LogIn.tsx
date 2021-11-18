@@ -17,24 +17,27 @@ export const LogIn = (props: LoginProps) => {
   };
 
   return (
-    <form
-      onSubmit={(evt) => {
-        sendForm(evt);
-      }}
-    >
-      <div>
-        <label>
-          Username: <input type="username" id="username" />
-        </label>
-      </div>
-      <div>
-        <label>
-          Password: <input type="password" id="password" />
-        </label>
-      </div>
-      <div>
-        <button type="submit">Login</button>
-      </div>
-    </form>
+    <div className="Content">
+      <h2>Log In</h2>
+      <form
+        onSubmit={(evt) => {
+          sendForm(evt);
+        }}
+      >
+        <div>
+          <label>
+            Username: <br /> <input type="username" id="username" />
+          </label>
+        </div>
+        <div>
+          <label>
+            Password: <br /> <input type="password" id="password" />
+          </label>
+        </div>
+        <div>
+          <button type="submit">Login</button>
+        </div>
+      </form>
+    </div>
   );
 };
