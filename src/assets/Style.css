@@ -27,7 +27,7 @@ button {
   width: 100px;
 }
 
-button:hover {
+button:enabled:hover {
   font-weight: bold;
   border: 2px solid;
 }
