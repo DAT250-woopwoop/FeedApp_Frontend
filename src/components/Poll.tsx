@@ -24,9 +24,6 @@ export const Poll = (props: PollType) => {
   }, [])
 
   useEffect(() => {
-    let yes :PollVote[] = []
-    let no :PollVote[] = []
-
     props.answers.forEach(async element => {
       await returnAccountByUsernameRequest(cookie.username, cookie.token).then(async accRes => {
         await getPollVoteByIdRequest(element, cookie.token).then(res => {
@@ -36,8 +33,6 @@ export const Poll = (props: PollType) => {
             setDisabeld(true)
         }
         })
-
-        
       })
     });
     
