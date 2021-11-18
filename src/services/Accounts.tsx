@@ -22,9 +22,10 @@ export const Accounts = () => {
         {accountData.map((account) => {
           return (
             <div className="Box" key={account.id}>
-              Username: {account.username} <br />
-              First name: {account.f_name} <br />
-              Last Naem: {account.l_name} <br />
+              <h3> {account.username} </h3>
+              Name: {account.f_name} {account.l_name} <br />
+              Email: {account.e_mail} <br />
+              Number of polls: {account.polls.length} <br />
             </div>
           );
         })}

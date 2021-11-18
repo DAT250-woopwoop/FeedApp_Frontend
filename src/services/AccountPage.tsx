@@ -35,9 +35,8 @@ export const AccountPage = () => {
     <div>
       <div className="Content">
         <div className="Box" key={acc?.id}>
-          Username: {acc?.username} <br />
-          First name: {acc?.f_name} <br />
-          Last Naem: {acc?.l_name} <br />
+          <h3> {acc?.username} </h3>
+          Name: {acc?.f_name} {acc?.l_name} <br />
           Email: {acc?.e_mail} <br />
         </div>
 
