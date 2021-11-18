@@ -30,29 +30,29 @@ export const DisablePoll = (props: PollType) => {
     getPollVotes()
   }, [])
 
-  const getPollVotes = () => {
+  const getPollVotes = async() => {
     let yes :PollVote[] = []
     let no :PollVote[] = []
     
-    props.answers.forEach(async element => {
-      await getPollVoteByIdRequest(element, cookie.token).then(async res => {
-        await returnAccountByUsernameRequest(cookie.username, cookie.token).then(accRes => {
-        
-          if (res.status === 200){
-            if (res.data.answer === "YES") {
-              yes = [...yes, res.data]
-              if (res.data.accountId === accRes.data.id){
-                setYesAnswer(true)
-              }
-            } else {
-              no = [...no, res.data]
-              if (res.data.accountId === accRes.data.id){
-                setNoAnswer(true)
+    await returnAccountByUsernameRequest(cookie.username, cookie.token).then(accRes => {
+      props.answers.forEach(async element => {
+        await getPollVoteByIdRequest(element, cookie.token).then(res => {
+          
+            if (res.status === 200){
+              if (res.data.answer === "YES") {
+                yes = [...yes, res.data]
+                if (res.data.accountId === accRes.data.id){
+                  setYesAnswer(true)
+                }
+              } else {
+                no = [...no, res.data]
+                if (res.data.accountId === accRes.data.id){
+                  setNoAnswer(true)
+                }
               }
             }
-          }
+          })
         })
-      })
       setYesVotes(yes)
       setNoVotes(no)
     });
