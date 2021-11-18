@@ -35,8 +35,8 @@ export const NewPoll = () => {
     const eTime = endDate.getFullYear() + "-" + endDate.getMonth() + "-" + endDate.getDate() + " " + endDate.getHours() +":"+ endDate.getMinutes() +":"+ endDate.getSeconds()
 
     setNewPollData({
-      pollDesc: title.value,
-      pollName: desc.value,
+      pollDesc: desc.value,
+      pollName: title.value,
       startTime: sTime,
       endTime: eTime,
       privatePoll: Boolean(priv.value),
