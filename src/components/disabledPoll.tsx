@@ -51,10 +51,11 @@ export const DisablePoll = (props: PollType) => {
                 }
               }
             }
-          })
+
         })
-      setYesVotes(yes)
-      setNoVotes(no)
+        setYesVotes(yes)
+        setNoVotes(no)
+      })
     });
   }
   

@@ -32,9 +32,7 @@ export const ActivePoll = (props: PollType) => {
       await getPollVoteByIdRequest(element, cookie.token).then(res => {
         
         if (res.status === 200){
-          if (res.data.answer === "YES") {
-            console.log(res);
-            
+          if (res.data.answer === "YES") {            
             yes = [...yes, res.data]
           } else {
             no = [...no, res.data]
@@ -44,7 +42,6 @@ export const ActivePoll = (props: PollType) => {
       setYesVotes(yes)
       setNoVotes(no)
     });
-    
     
   }, [])
 
@@ -60,8 +57,7 @@ export const ActivePoll = (props: PollType) => {
           position: "relative",
         }}
       >
-        {console.log(yesVotes)
-        }
+        {/* {console.log(yesVotes)} */}
         <AnswerButton
           votes={yesVotes.length}
           voteType="Yes"
