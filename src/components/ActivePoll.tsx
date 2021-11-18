@@ -1,10 +1,10 @@
-import { AccountType, PollType, PollVote } from "../services/types";
+import { AccountType, PollType, PollVote, AccountByIdResponse } from "../services/types";
 import { AnswerButton } from "./AnswerButton";
 import { yesNoRequest } from "../requests/PollRequests";
 import "../assets/Style.css";
 import { useCookies } from "react-cookie";
 import { useEffect, useState } from "react";
-import { getAccountByUsernameRequest } from "../requests/AccountRequests";
+import { getAccountByUsernameRequest, getAccountByIdRequest } from "../requests/AccountRequests";
 import { getPollVoteByIdRequest } from "../requests/PollVotesRequests";
 
 export const ActivePoll = (props: PollType) => {
@@ -16,9 +16,12 @@ export const ActivePoll = (props: PollType) => {
   const [yesVotes, setYesVotes] = useState<Array<PollVote>>([])
   const [noVotes, setNoVotes] = useState<Array<PollVote>>([])
 
+  const [pollOwner, setPollOwner] = useState<AccountByIdResponse>();
+
 
   useEffect(() => {
     getAccountByUsernameRequest(cookie.username, cookie.token, setAcc)
+    getAccountByIdRequest(props.accountId, setPollOwner, cookie.token)
   }, [])
 
   useEffect(() => {
@@ -47,8 +50,8 @@ export const ActivePoll = (props: PollType) => {
 
   return (
     <div className="Box" key={props.id}>
-      Name: {props.pollName} <br />
-      Description: {props.pollDesc} <br />
+      <h3>{props.pollName}</h3>
+      <p>{props.pollDesc}</p>
       <div
         style={{
           textAlign: "center",
@@ -83,6 +86,9 @@ export const ActivePoll = (props: PollType) => {
             )
           }
         />
+      </div>
+      <div style={{textAlign: "right"}}>
+        {pollOwner?.username}
       </div>
     </div>
   );
