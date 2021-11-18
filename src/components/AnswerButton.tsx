@@ -16,7 +16,13 @@ export const AnswerButton = (
             className="answerButton"
             disabled={props.disable ? props.disable : false}
            
-            onClick={() => props.callback()} >{props.voteType} ({props.votes})</button>
+            onClick={() => {
+                props.callback();
+                window.location.reload();
+            }}
+            >
+                {props.voteType} ({props.votes})
+            </button>
         )
 }
 
@@ -27,12 +33,15 @@ export const DisabledAnswerButton = (
         const textColor = props.ans ? "white" : "gray"
         return(
             <button 
-            className="answerButton"
-            disabled={props.disable ? props.disable : false}
-            style={{
-                backgroundColor: backColor,
-                color: textColor
-            }}
-            onClick={() => props.callback()} >{props.voteType} ({props.votes})</button>
+                className="answerButton"
+                disabled={props.disable ? props.disable : false}
+                style={{
+                    backgroundColor: backColor,
+                    color: textColor
+                }}
+                onClick={() => props.callback()}
+            >
+                {props.voteType} ({props.votes})
+            </button>
         )
 }

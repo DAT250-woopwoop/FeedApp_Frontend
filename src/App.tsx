@@ -74,14 +74,14 @@ const App2 = () => {
               switch (choise) {
                 case 1:
                   return <Accounts />;
-                case 2:
-                  return <Polls />;
                 case 4:
                   return <NewPoll />;
                 case 5:
-                  return <AccountPage />
+                  return <AccountPage />;
+                case 6:
+                  return <PollSearch />;
                 default:
-                  return <PollSearch />
+                  return <Polls />;
               }
             })()
           : (() => {
